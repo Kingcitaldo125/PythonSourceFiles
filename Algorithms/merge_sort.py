@@ -1,49 +1,40 @@
-from random import randrange as rr
+def merge(mlist1, mlist2):
+	i = 0
+	j = 0
+	reslist = []
 
-def merge(first, second):
-	i=0
-	j=0
+	while i < len(mlist1) and j < len(mlist2):
+		i_itm = mlist1[i]
+		j_itm = mlist2[j]
 
-	resarr=[]
-
-	while i < len(first) and j < len(second):
-		f = first[i]
-		s = second[j]
-
-		if f < s:
-			resarr.append(f)
+		if i_itm < j_itm:
+			reslist.append(i_itm)
 			i += 1
 		else:
-			resarr.append(s)
+			reslist.append(j_itm)
 			j += 1
 
-	while i < len(first):
-		resarr.append(first[i])
+	while i < len(mlist1):
+		i_itm = mlist1[i]
+		reslist.append(i_itm)
 		i += 1
 
-	while j < len(second):
-		resarr.append(second[j])
+	while j < len(mlist2):
+		j_itm = mlist2[j]
+		reslist.append(j_itm)
 		j += 1
 
-	return resarr
+	return reslist
 
-def merge_sort(marr):
-	def m_help(m):
-		mlen = len(m)
+def merge_sort(mlist):
+	if len(mlist) <= 1:
+		return mlist
 
-		if mlen == 1:
-			return m
+	mid = len(mlist) // 2
+	
+	m1 = merge_sort(mlist[:mid])
+	m2 = merge_sort(mlist[mid:])
 
-		idx = len(m)//2
+	return merge(m1, m2)
 
-		return merge(m_help(m[0:idx]), m_help(m[idx:len(m)]))
-
-	return m_help(marr)
-
-xarr = [rr(1,100) for i in range(20)]
-
-print(xarr)
-
-xarr = merge_sort(xarr)
-
-print(xarr)
+print(merge_sort([4,1,7,2,5,9,3,6,8]))
